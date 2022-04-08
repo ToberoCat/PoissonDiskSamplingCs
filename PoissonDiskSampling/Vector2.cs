@@ -22,7 +22,7 @@ namespace PoissonDiskSampling
 
         public float Y { get; set; }
 
-        public float Sum()
+        public float SumXY()
         {
             return X + Y;
         }
@@ -47,22 +47,22 @@ namespace PoissonDiskSampling
             return new Vector2(Math.Min(max.X, Math.Max(min.X, X)), Math.Min(max.Y, Math.Max(min.Y, Y)));
         }
 
-        public Vector2 Sub(float value)
+        public Vector2 Subtract(float value)
         {
             return new Vector2(X - value, Y - value);
         }
 
-        public Vector2 Sub(Vector2 vector)
+        public Vector2 Subtract(Vector2 vector)
         {
             return new Vector2(X - vector.X, Y - vector.Y);
         }
 
-        public Vector2 Mult(float value)
+        public Vector2 Multiply(float value)
         {
             return new Vector2(X * value, Y * value);
         }
 
-        public Vector2 Div(float value)
+        public Vector2 Divide(float value)
         {
             return new Vector2(X / value, Y / value);
         }

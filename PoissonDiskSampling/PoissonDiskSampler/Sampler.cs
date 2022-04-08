@@ -35,7 +35,7 @@ namespace PoissonDiskSampling.PoissonDiskSampler
         public List<Circle> SamplePoints(int maxSamples)
         {
             var points = new List<Circle>();
-            points.Add(new Circle(GetRadius(), _settings.Size.Div(2)));
+            points.Add(new Circle(GetRadius(), _settings.Size.Divide(2)));
 
             for (var i = 0; i < maxSamples; i++)
             {
@@ -46,14 +46,14 @@ namespace PoissonDiskSampling.PoissonDiskSampler
                     nextRadius = GetRadius();
                     var lastCircle = points[points.Count - 1];
                     nextPoint = GetRandomPointAround(lastCircle.Point, lastCircle.Radius);
-                    nextPoint = nextPoint.Add(nextPoint.Sub(lastCircle.Point).Mult(nextRadius));
+                    nextPoint = nextPoint.Add(nextPoint.Subtract(lastCircle.Point).Multiply(nextRadius));
                 }
 
                 // Trying to place the a point to the generated position
                 var overlapping = false;
                 foreach (var point in points)
                 {
-                    var dst = point.Point.Sub(nextPoint).Sqrmagnitude;
+                    var dst = point.Point.Subtract(nextPoint).Sqrmagnitude;
                     if (dst < Math.Pow(point.Radius, 2))
                     {
                         overlapping = true;
@@ -72,7 +72,7 @@ namespace PoissonDiskSampling.PoissonDiskSampler
         private bool IsInBounds(Vector2 position, float radius)
         {
             var max = position.Add(radius);
-            var min = position.Sub(radius);
+            var min = position.Subtract(radius);
 
             var size = _settings.Size;
 
@@ -93,7 +93,7 @@ namespace PoissonDiskSampling.PoissonDiskSampler
 
         private Vector2 GetRandomPointAround(Vector2 origin, float minRad)
         {
-            var direction = new Vector2(Math.Sin(Random.Next(0, 360)), Math.Cos(Random.Next(0, 360))).Mult(minRad);
+            var direction = new Vector2(Math.Sin(Random.Next(0, 360)), Math.Cos(Random.Next(0, 360))).Multiply(minRad);
 
             return origin.Add(direction).Clamp(new Vector2(0, 0), _settings.Size);
         }
