@@ -22,7 +22,7 @@ namespace PoissonDiskSampling
 
         public float Y { get; set; }
 
-        public float SumXY()
+        public float SumXy()
         {
             return X + Y;
         }
