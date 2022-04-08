@@ -3,27 +3,9 @@ using System.Collections.Generic;
 
 namespace PoissonDiskSampling.PoissonDiskSampler
 {
-    public struct Circle
-    {
-        public Circle(float radius, Vector2 point)
-        {
-            Radius = radius;
-            Point = point;
-        }
-
-        public override string ToString()
-        {
-            return "Radius: " + Radius + "; Position: " + Point;
-        }
-
-        public float Radius { get; }
-
-        public Vector2 Point { get; }
-    }
-
     public class Sampler
     {
-        public static readonly Random Random = new Random();
+        private static readonly Random Random = new Random();
 
         private readonly SamplerSettings _settings;
 
@@ -49,16 +31,15 @@ namespace PoissonDiskSampling.PoissonDiskSampler
                     nextPoint = nextPoint.Add(nextPoint.Subtract(lastCircle.Point).Multiply(nextRadius));
                 }
 
-                // Trying to place the a point to the generated position
+                // Trying to place the point to the generated position
                 var overlapping = false;
                 foreach (var point in points)
                 {
                     var dst = point.Point.Subtract(nextPoint).Sqrmagnitude;
-                    if (dst < Math.Pow(point.Radius, 2))
-                    {
-                        overlapping = true;
-                        break;
-                    }
+                    if (dst > Math.Pow(point.Radius, 2)) continue;
+                    
+                    overlapping = true;
+                    break;
                 }
 
                 if (overlapping) continue;
